@@ -1,0 +1,147 @@
+name: Update
+
+on:
+  schedule:
+    # Twice a day, off the top of the hour.
+    - cron: "17 5,17 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: update
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed_v1: ${{ steps.update.outputs.changed_v1 }}
+      changed_v2: ${{ steps.update.outputs.changed_v2 }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: DeterminateSystems/nix-installer-action@v20
+      - name: Update sources
+        id: update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/update.sh
+      - run: git diff -- sources.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sources
+          path: sources.json
+
+  # Each track (v1/v2) is built on every platform. Successful legs leave an
+  # ok-<track>-<system> marker; the commit job only applies tracks whose legs
+  # all succeeded, so a broken release on one track never blocks the other.
+  build:
+    needs: update
+    if: needs.update.outputs.changed_v1 == 'true' || needs.update.outputs.changed_v2 == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        track: [v1, v2]
+        platform:
+          - os: ubuntu-latest
+            system: x86_64-linux
+          - os: macos-15
+            system: aarch64-darwin
+        include:
+          - track: v1
+            cli: opencode
+            desktop: opencode-desktop
+            app: OpenCode.app
+          - track: v2
+            cli: opencode-v2
+            desktop: opencode-desktop-v2
+            app: OpenCode 2.app
+    runs-on: ${{ matrix.platform.os }}
+    env:
+      CHANGED: ${{ matrix.track == 'v1' && needs.update.outputs.changed_v1 || needs.update.outputs.changed_v2 }}
+    steps:
+      - uses: actions/checkout@v5
+        if: env.CHANGED == 'true'
+      - uses: actions/download-artifact@v5
+        if: env.CHANGED == 'true'
+        with:
+          name: sources
+      - uses: DeterminateSystems/nix-installer-action@v20
+        if: env.CHANGED == 'true'
+      - name: Verify runner architecture
+        if: env.CHANGED == 'true'
+        run: test "$(nix eval --impure --raw --expr builtins.currentSystem)" = "${{ matrix.platform.system }}"
+      - name: Build CLI
+        if: env.CHANGED == 'true'
+        run: nix build --print-build-logs .#${{ matrix.cli }} --out-link cli
+      - name: Build desktop
+        if: env.CHANGED == 'true'
+        run: nix build --print-build-logs .#${{ matrix.desktop }} --out-link desktop
+      - name: Verify macOS signature
+        if: env.CHANGED == 'true' && runner.os == 'macOS'
+        run: codesign --verify --deep --strict --verbose=2 "desktop/Applications/${{ matrix.app }}"
+      - name: Mark success
+        if: env.CHANGED == 'true'
+        run: touch "ok-${{ matrix.track }}-${{ matrix.platform.system }}"
+      - uses: actions/upload-artifact@v4
+        if: env.CHANGED == 'true'
+        with:
+          name: ok-${{ matrix.track }}-${{ matrix.platform.system }}
+          path: ok-${{ matrix.track }}-${{ matrix.platform.system }}
+
+  commit:
+    needs: [update, build]
+    if: always() && needs.update.result == 'success' && (needs.update.outputs.changed_v1 == 'true' || needs.update.outputs.changed_v2 == 'true')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        with:
+          name: sources
+          path: updated
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: ok-*
+          path: ok
+          merge-multiple: true
+      - name: Commit verified tracks
+        env:
+          CHANGED_V1: ${{ needs.update.outputs.changed_v1 }}
+          CHANGED_V2: ${{ needs.update.outputs.changed_v2 }}
+        run: |
+          set -euo pipefail
+          applied=()
+          for track in v1 v2; do
+            changed_var="CHANGED_${track^^}"
+            [[ "${!changed_var}" == true ]] || continue
+            if [[ -f "ok/ok-$track-x86_64-linux" && -f "ok/ok-$track-aarch64-darwin" ]]; then
+              jq -S --arg t "$track" --slurpfile new updated/sources.json '.[$t] = $new[0][$t]' \
+                sources.json > sources.json.tmp
+              mv sources.json.tmp sources.json
+              cli="$(jq -r --arg t "$track" '.[$t].cli.version' sources.json)"
+              desktop="$(jq -r --arg t "$track" '.[$t].desktop.version' sources.json)"
+              if [[ "$cli" == "$desktop" ]]; then
+                applied+=("$track to $cli")
+              else
+                applied+=("$track to $cli (desktop $desktop)")
+              fi
+            else
+              echo "::warning::Not updating $track: its builds did not succeed on every platform."
+            fi
+          done
+
+          if git diff --quiet -- sources.json; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+
+          message="chore: update opencode $(printf '%s, ' "${applied[@]}")"
+          message="${message%, }"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sources.json
+          git commit -m "$message"
+          git pull --rebase
+          git push
