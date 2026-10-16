@@ -2,48 +2,48 @@
   "v1": {
     "cli": {
       "aarch64-darwin": {
-        "hash": "sha256-HJ2hELvz4TxIDgouVfYbCevbM8/GcCm2H/u5+FZtZ80=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.2/opencode-darwin-arm64.zip"
+        "hash": "sha256-wtD+zSes9uCL4CwfXThGFNB0lVh3ZrzEpr/zlxdJu2Q=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.3/opencode-darwin-arm64.zip"
       },
-      "version": "1.19.2",
+      "version": "1.19.3",
       "x86_64-linux": {
-        "hash": "sha256-Tv+NLPhhTq2X6t8RI9RgM9yXXq3qw98EZEpkuuD56Bk=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.2/opencode-linux-x64.tar.gz"
+        "hash": "sha256-E6j7KXgwIHG4b51+ANqciJX5zYRpeDecO9xqUzNTbJs=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.3/opencode-linux-x64.tar.gz"
       }
     },
     "desktop": {
       "aarch64-darwin": {
-        "hash": "sha256-1a0bLEEsG3ivPzOzcZI3U5EkigSCirapImAxgacNP0s=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.2/opencode-desktop-mac-arm64.app.tar.gz"
+        "hash": "sha256-Sj+ZspGbN36LxslAoavE7/5dA8jhtY/PvFVb5jDSSLE=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.3/opencode-desktop-mac-arm64.app.tar.gz"
       },
-      "version": "1.19.2",
+      "version": "1.19.3",
       "x86_64-linux": {
-        "hash": "sha256-CBW31WCfXH92QqNsl8DuwQTaDyJ7fjw0oGtCmOO4ig4=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.2/opencode-desktop-linux-amd64.deb"
+        "hash": "sha256-97o0bFTRfYqrHOJoS3jGAf+SKyVMNPBg5fPjBBOoykA=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.3/opencode-desktop-linux-amd64.deb"
       }
     }
   },
   "v2": {
     "cli": {
       "aarch64-darwin": {
-        "hash": "sha256-HVyyowJy8HDJxVttiJW9odGSnncC9ea+sCtdOhfeiWE=",
-        "url": "https://opencode.ai/files/bin/2.0.30/opencode-darwin-arm64.zip"
+        "hash": "sha256-CIg0QKsg5mPx4zppBFuzKGZDtqMJhVE5ZzYV+nBMxxo=",
+        "url": "https://opencode.ai/files/bin/2.0.31/opencode-darwin-arm64.zip"
       },
-      "version": "2.0.30",
+      "version": "2.0.31",
       "x86_64-linux": {
-        "hash": "sha256-7KlhZ6EtmCGJ1PjTWVK/JtE1oTdRdI22T+F7ctUll5M=",
-        "url": "https://opencode.ai/files/bin/2.0.30/opencode-linux-x64.tar.gz"
+        "hash": "sha256-C5EsN4VusmhBmw5k23Yl3ZQKCKAoXVBB5+GSzIG98jA=",
+        "url": "https://opencode.ai/files/bin/2.0.31/opencode-linux-x64.tar.gz"
       }
     },
     "desktop": {
       "aarch64-darwin": {
-        "hash": "sha256-K4RfsaDlvTI5jekagendGlW0QOeKqbVpF2V5kJgSTlw=",
-        "url": "https://opencode.ai/files/bin/2.0.30/opencode-desktop-mac-arm64.app.tar.gz"
+        "hash": "sha256-BgU96A2E/GRF98i/kVPA140vKObc/nk9KM69CIfRO7s=",
+        "url": "https://opencode.ai/files/bin/2.0.31/opencode-desktop-mac-arm64.app.tar.gz"
       },
-      "version": "2.0.30",
+      "version": "2.0.31",
       "x86_64-linux": {
-        "hash": "sha256-XfgKBTxubPIhtIuRSOI+SmAk8U0yIbEWPtRfgB3gdoY=",
-        "url": "https://opencode.ai/files/bin/2.0.30/opencode-desktop-linux-amd64.deb"
+        "hash": "sha256-I5dAUWtEkCj3gyB2vM8Udls5IdKyw6+kEJUCZyGBQbM=",
+        "url": "https://opencode.ai/files/bin/2.0.31/opencode-desktop-linux-amd64.deb"
       }
     }
   }
