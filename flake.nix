@@ -36,6 +36,7 @@
           source = sources.v1.desktop;
           mainProgram = "opencode-desktop";
           desktopId = "ai.opencode.desktop";
+          upstreamId = "ai.opencode.desktop";
           desktopName = "OpenCode";
           urlSchemeHandler = true;
           description = "AI coding agent desktop client";
@@ -56,6 +57,7 @@
           source = sources.v2.desktop;
           mainProgram = "opencode2-desktop";
           desktopId = "ai.opencode.desktop2";
+          upstreamId = "ai.opencode";
           desktopName = "OpenCode 2";
           urlSchemeHandler = false;
           description = "AI coding agent desktop client (v2)";

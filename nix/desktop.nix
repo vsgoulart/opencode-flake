@@ -63,6 +63,8 @@
   mainProgram,
   # Desktop entry / icon id used on Linux.
   desktopId,
+  # Name of the Electron executable and icons inside the upstream .deb.
+  upstreamId,
   # Name shown in launchers, and the macOS bundle name (<desktopName>.app).
   desktopName,
   # Whether this package registers the opencode:// URL scheme on Linux.
@@ -76,8 +78,9 @@ let
   inherit (stdenvNoCC.hostPlatform) system isLinux isDarwin;
   artifact = source.${system} or (throw "${pname}: unsupported system ${system}");
 
-  # Name of the Electron executable inside the upstream package.
-  executable = "ai.opencode.desktop";
+  # Upstream identifies its windows as ai.opencode.desktop (both v1 and v2),
+  # regardless of the executable name.
+  wmClass = "ai.opencode.desktop";
   appDir = "$out/opt/${pname}";
 
   electronLibs = [
@@ -160,7 +163,7 @@ let
       ln -s ${lib.getLib vulkan-loader}/lib/libvulkan.so.1 ${appDir}/libvulkan.so.1
 
       for size in 32 64 128; do
-        install -Dm644 usr/share/icons/hicolor/''${size}x''${size}/apps/ai.opencode.desktop.png \
+        install -Dm644 usr/share/icons/hicolor/''${size}x''${size}/apps/${upstreamId}.png \
           $out/share/icons/hicolor/''${size}x''${size}/apps/${desktopId}.png
       done
       asar extract-file ${appDir}/resources/app.asar resources/icons/128x128@2x.png
@@ -178,8 +181,7 @@ let
         comment = description;
         exec = "${mainProgram} %U";
         icon = desktopId;
-        # Upstream identifies its windows as ai.opencode.desktop (both v1 and v2).
-        startupWMClass = executable;
+        startupWMClass = wmClass;
         categories = [ "Development" ];
         mimeTypes = lib.optional urlSchemeHandler "x-scheme-handler/opencode";
       })
@@ -200,7 +202,7 @@ let
 
       # Chromium dlopens most of its graphics/audio/desktop libraries.
       patchelf --add-rpath ${lib.makeLibraryPath electronLibs} \
-        ${appDir}/${executable} ${appDir}/chrome_crashpad_handler
+        ${appDir}/${upstreamId} ${appDir}/chrome_crashpad_handler
       for lib in ${appDir}/lib*GL*.so; do
         [ -e "$lib" ] || continue
         patchelf --add-rpath ${
@@ -214,7 +216,7 @@ let
 
       # A shell wrapper is required for the runtime ''${NIXOS_OZONE_WL:+...}
       # expansion (wrapGAppsHook3 would otherwise select the binary wrapper).
-      makeShellWrapper ${appDir}/${executable} $out/bin/${mainProgram} \
+      makeShellWrapper ${appDir}/${upstreamId} $out/bin/${mainProgram} \
         "''${gappsWrapperArgs[@]}" \
         --set OPENCODE_DISABLE_AUTOUPDATE 1 \
         --prefix PATH : ${lib.makeBinPath [ ripgrep ]} \
