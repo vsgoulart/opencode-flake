@@ -2,24 +2,24 @@
   "v1": {
     "cli": {
       "aarch64-darwin": {
-        "hash": "sha256-xACi+MirfplHin9N0aRmtXvzOIjlINhcVXgKVGTEtok=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.4/opencode-darwin-arm64.zip"
+        "hash": "sha256-wcnmJSEZIZLvTD7RNVraIUQFW922FoIhfpl7A8VSA8E=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.5/opencode-darwin-arm64.zip"
       },
-      "version": "1.19.4",
+      "version": "1.19.5",
       "x86_64-linux": {
-        "hash": "sha256-hJvWs9lZodLvIA7RY0pRx5pFyiNqomZl113r1pSAXM4=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.4/opencode-linux-x64.tar.gz"
+        "hash": "sha256-WIMQozb6O53zaz8CJbJvZ51FPvqtDPPWbDZR7z7BZHo=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.5/opencode-linux-x64.tar.gz"
       }
     },
     "desktop": {
       "aarch64-darwin": {
-        "hash": "sha256-ZB4A99b4bcm3D5SHQV+yS9soUHSZU2vdOt3QoTHQNmE=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.4/opencode-desktop-mac-arm64.app.tar.gz"
+        "hash": "sha256-gCEn4JpR0jnTW3OwIBD5pzbuoU0EkS8spEUz3foAW2c=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.5/opencode-desktop-mac-arm64.app.tar.gz"
       },
-      "version": "1.19.4",
+      "version": "1.19.5",
       "x86_64-linux": {
-        "hash": "sha256-b0uOvnILVkFXkZNk4ectW47ESgE80qWLTsZ5sIBagwc=",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.4/opencode-desktop-linux-amd64.deb"
+        "hash": "sha256-3jgqrLX0Kjuh+o1CprYwMZrq04ubp8knAL7l2jl3uzI=",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.5/opencode-desktop-linux-amd64.deb"
       }
     }
   },
