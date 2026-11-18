@@ -26,24 +26,24 @@
   "v2": {
     "cli": {
       "aarch64-darwin": {
-        "hash": "sha256-eQffKxJyCoQPu0nFuXi5uCkltr91R5pf0havqJMrZwI=",
-        "url": "https://opencode.ai/files/bin/2.3.0/opencode-darwin-arm64.zip"
+        "hash": "sha256-MataBqKe3H5JuJXzXCtk6/58fwQ3sPJYGwBu/Nef7ho=",
+        "url": "https://opencode.ai/files/bin/2.3.2/opencode-darwin-arm64.zip"
       },
-      "version": "2.3.0",
+      "version": "2.3.2",
       "x86_64-linux": {
-        "hash": "sha256-/A+BUirO6rrEdpPYg4nvorxRfOdMLDj9aWeBn8xuTTs=",
-        "url": "https://opencode.ai/files/bin/2.3.0/opencode-linux-x64.tar.gz"
+        "hash": "sha256-VjtdZjY3ImtuO7S7aAMoG8ObDSzYjbBtZ0tkIKqwCbA=",
+        "url": "https://opencode.ai/files/bin/2.3.2/opencode-linux-x64.tar.gz"
       }
     },
     "desktop": {
       "aarch64-darwin": {
-        "hash": "sha256-sP1UUaQH4XF/IGt+uyIbpnKutBLAQfLjD6CvCINwTMs=",
-        "url": "https://opencode.ai/files/bin/2.3.1/opencode-desktop-mac-arm64.app.tar.gz"
+        "hash": "sha256-qsgPhqc2jghRnr6G/6Jm7JqoY6UDpd6dYlXWinsxbck=",
+        "url": "https://opencode.ai/files/bin/2.3.2/opencode-desktop-mac-arm64.app.tar.gz"
       },
-      "version": "2.3.1",
+      "version": "2.3.2",
       "x86_64-linux": {
-        "hash": "sha256-oTJ12pSB9Te31ytGTl00CBRyMHFn5Ir0iRuoj9LJIOU=",
-        "url": "https://opencode.ai/files/bin/2.3.1/opencode-desktop-linux-amd64.deb"
+        "hash": "sha256-7XAA4uH9m5j0NnEY5tHuvvO6qaSwLWxgkPOX36p4exc=",
+        "url": "https://opencode.ai/files/bin/2.3.2/opencode-desktop-linux-amd64.deb"
       }
     }
   }
